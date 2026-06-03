@@ -30,7 +30,7 @@ Documents in the dataset include tenders, reports, humanitarian initiatives, new
 - Exploratory data analysis and class imbalance investigation
 - Text preprocessing (HTML stripping, lemmatization, stop word removal)
 - TF-IDF feature engineering (unigrams and bigrams)
-- 10 systematic experiments across model types, balancing strategies, and thresholds
+- 11 systematic experiments across model types, balancing strategies, thresholds, and embeddings
 - Final model selection and test set inference
 - Submission file generation
 
@@ -73,25 +73,33 @@ SDG3-Assignment/
 │
 ├── notebooks/
 │   ├── 01_EDA_and_Preprocessing.ipynb     ← EDA, cleaning, label binarization
-│   ├── 02_Baseline_Experiments.ipynb      ← 10 experiments, evaluation
+│   ├── 02_Baseline_Experiments.ipynb      ← 11 experiments, evaluation
 │   └── 03_Final_Model_Inference.ipynb     ← final model, submission file
 │
 ├── outputs/
 │   ├── train_clean.csv                    ← preprocessed training data
 │   ├── test_clean.csv                     ← preprocessed test data
 │   ├── all_indicators.json                ← list of 27 SDG 3 indicators
-│   ├── experiment_results.csv             ← all 10 experiment metrics
+│   ├── experiment_results.csv             ← all 11 experiment metrics
 │   ├── per_label_f1.csv                   ← per-label performance breakdown
 │   ├── best_thresholds_e9.npy             ← saved per-label thresholds
-│   ├── submission.csv                     ← final test predictions
+│   ├── X_train_sbert.npy                  ← SBERT training embeddings (E11)
+│   ├── X_val_sbert.npy                    ← SBERT validation embeddings (E11)
+│   ├── submission.csv                     ← final test predictions (998 rows)
 │   └── figures/
 │       ├── document_type_distribution.png
 │       ├── label_distribution.png
 │       ├── labels_per_sample.png
 │       ├── text_length_distribution.png
+│       ├── wordcloud_all.png
+│       ├── top_terms_per_label.png
+│       ├── doctype_vs_label.png
 │       ├── label_cooccurrence_heatmap.png
 │       ├── preprocessing_effect.png
 │       ├── experiment_comparison.png
+│       ├── learning_curves_sgd.png
+│       ├── per_label_confusion_heatmap.png
+│       ├── hyperparameter_tuning_C.png
 │       ├── per_label_f1.png
 │       ├── final_per_label_f1.png
 │       ├── precision_recall_scatter.png
@@ -99,7 +107,7 @@ SDG3-Assignment/
 │       └── final_experiment_comparison.png
 │
 └── report/
-    └── Group6_Assignment2_Report.pdf
+    └── formative2_group6_Assignment2.pdf
 ```
 
 ---
@@ -120,6 +128,8 @@ pandas
 numpy
 matplotlib
 seaborn
+wordcloud
+sentence-transformers
 ```
 
 ### Steps
@@ -138,7 +148,7 @@ Produces `train_clean.csv`, `test_clean.csv`, and all EDA figures.
 **Step 3 — Run Notebook 2**
 
 Open `02_Baseline_Experiments.ipynb` in Colab and run all cells top to bottom.
-Runs all 10 experiments and saves `experiment_results.csv`.
+Runs all 11 experiments and saves `experiment_results.csv`.
 
 **Step 4 — Run Notebook 3**
 
@@ -162,7 +172,9 @@ Generates `submission.csv` in `outputs/`.
 | E7  | TF-IDF bigrams + SGD (log loss) balanced | 0.0504 | 0.5451 |
 | E8  | TF-IDF bigrams + LR + MLSMOTE oversampling | 0.0589 | 0.5386 |
 | E9  | Best synthesis: bigrams + LR + threshold tuning | 0.0547 | 0.5839 |
+| E9b | LinearSVC hyperparameter tuning (C values) | 0.0463 | 0.4825 |
 | E10 | Majority voting ensemble: LR + SVM + SGD | 0.0503 | 0.5411 |
+| E11 | SBERT embeddings + LinearSVC | 0.0555 | 0.2526 |
 
 **Final model: E4 — TF-IDF Bigrams + LinearSVC** (lowest Hamming Loss = 0.0476)
 
@@ -173,6 +185,7 @@ Generates `submission.csv` in `outputs/`.
 - **Class weighting was the single biggest improvement** — adding `class_weight='balanced'` to E1 improved F1 Macro by 165% (0.2062 → 0.5475) with no other changes
 - **SVM outperforms LR on Hamming Loss** but underperforms on F1 Macro — a precision/recall tradeoff
 - **Threshold tuning beats MLSMOTE** for rare label recall — synthetic TF-IDF interpolation added noise rather than signal
+- **TF-IDF outperforms SBERT** — general-purpose embeddings underperform on domain-specific SDG terminology; BioBERT or PubMedBERT recommended as future improvement
 - **Rare labels remain challenging** — indicators with fewer than 15 validation samples (3.1.2, 3.9.3, 3.3.4) still achieve near-zero F1 regardless of balancing strategy
 
 ---
@@ -181,9 +194,9 @@ Generates `submission.csv` in `outputs/`.
 
 | Member | Contribution |
 |--------|-------------|
-| Jok John Maker Kur | Full pipeline implementation, all 3 notebooks, experiments, GitHub repo |
-| Nanen Miracle Mbanaade | Report — Methodology and Results sections |
-| Nziza Aime Pacifique | Report — Introduction, Discussion, and Conclusion sections |
+| Jok John Maker Kur | Notebook 2 — All experiments (E1–E11), GitHub repo, README |
+| Nanen Miracle Mbanaade | Notebook 1 — EDA & Preprocessing, Report: Methodology, Results, Discussion |
+| Nziza Aime Pacifique | Notebook 3 — Final Model & Inference, Report: Introduction, Literature, Conclusion, Ethics |
 
 ---
 
