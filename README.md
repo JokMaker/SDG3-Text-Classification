@@ -1,8 +1,8 @@
 # SDG 3 Indicator Text Classification
 
-**MLT1 Formative 2 — Group Assignment | African Leadership University**
+**MLT1 Formative 2 - Group Assignment | African Leadership University**
 
-**Group 6** — Jok John Maker Kur · Nanen Miracle Mbanaade · Nziza Aime Pacifique
+**Group 6** - Jok John Maker Kur · Nanen Miracle Mbanaade · Nziza Aime Pacifique
 
 ---
 
@@ -23,7 +23,7 @@
 
 This project builds a **multi-label text classification system** that predicts which indicators of **Sustainable Development Goal 3 (Good Health and Well-Being)** are relevant to a given text document.
 
-Documents in the dataset include tenders, reports, humanitarian initiatives, news articles, and development organization publications. Each document can relate to **multiple SDG 3 indicators simultaneously**, making this a multi-label NLP problem.
+Documents in the dataset include tenders, reports, humanitarian initiatives, news articles, and development organisation publications. Each document can relate to **multiple SDG 3 indicators simultaneously**, making this a multi-label NLP problem.
 
 **The pipeline covers:**
 
@@ -37,7 +37,7 @@ Documents in the dataset include tenders, reports, humanitarian initiatives, new
 | Metric | Value |
 |--------|-------|
 | Evaluation metric | Hamming Loss (lower = better) |
-| Best validation Hamming Loss | `0.0476` — TF-IDF Bigrams + LinearSVC |
+| Best validation Hamming Loss | `0.0476` - TF-IDF Bigrams + LinearSVC |
 
 ---
 
@@ -50,7 +50,7 @@ Documents in the dataset include tenders, reports, humanitarian initiatives, new
 
 **Label structure:** 27 unique SDG 3 indicators (e.g. `3.1.1 - Maternal mortality ratio`, `3.3.1 - HIV infections`, `3.b.2 - ODA to medical research`)
 
-**Key challenge:** Severe class imbalance — most frequent label appears 1,044 times, rarest appears 165 times (6.3× ratio after binarization)
+**Key challenge:** Severe class imbalance - most frequent label appears 1,044 times, rarest appears 165 times (6.3× ratio after binarization)
 
 Download the datasets from the Canvas assignment page and place them in:
 
@@ -116,7 +116,7 @@ SDG3-Assignment/
 
 ### Requirements
 
-All notebooks run on **Google Colab** — no local setup needed. The following libraries are installed automatically inside each notebook:
+All notebooks run on **Google Colab** - no local setup needed. The following libraries are installed automatically inside each notebook:
 
 ```
 scikit-learn
@@ -134,23 +134,23 @@ sentence-transformers
 
 ### Steps
 
-**Step 1 — Set up Google Drive**
+**Step 1 - Set up Google Drive**
 
 1. Create a folder called `SDG3-Assignment` in your Google Drive
 2. Inside it, create: `data/`, `notebooks/`, `outputs/`
 3. Upload `Devex_train.csv` and `Devex_test_questions.csv` into `data/`
 
-**Step 2 — Run Notebook 1**
+**Step 2 - Run Notebook 1**
 
 Open `01_EDA_and_Preprocessing.ipynb` in Colab and run all cells top to bottom.
 Produces `train_clean.csv`, `test_clean.csv`, and all EDA figures.
 
-**Step 3 — Run Notebook 2**
+**Step 3 - Run Notebook 2**
 
 Open `02_Baseline_Experiments.ipynb` in Colab and run all cells top to bottom.
 Runs all 11 experiments and saves `experiment_results.csv`.
 
-**Step 4 — Run Notebook 3**
+**Step 4 - Run Notebook 3**
 
 Open `03_Final_Model_Inference.ipynb` in Colab and run all cells top to bottom.
 Generates `submission.csv` in `outputs/`.
@@ -166,7 +166,7 @@ Generates `submission.csv` in `outputs/`.
 | E1  | TF-IDF unigrams + LR (no balancing) — baseline | 0.0565 | 0.2062 |
 | E2  | + class_weight='balanced' | 0.0588 | 0.5475 |
 | E3  | TF-IDF bigrams + LR balanced | 0.0571 | 0.5360 |
-| E4  | TF-IDF bigrams + LinearSVC balanced ⭐ | **0.0476** | 0.4827 |
+| E4  | TF-IDF bigrams + LinearSVC balanced  | **0.0476** | 0.4827 |
 | E5  | TF-IDF unigrams + Random Forest balanced | 0.0556 | 0.2518 |
 | E6  | TF-IDF bigrams + LR + per-label threshold tuning | 0.0547 | **0.5839** |
 | E7  | TF-IDF bigrams + SGD (log loss) balanced | 0.0504 | 0.5451 |
@@ -176,17 +176,17 @@ Generates `submission.csv` in `outputs/`.
 | E10 | Majority voting ensemble: LR + SVM + SGD | 0.0503 | 0.5411 |
 | E11 | SBERT embeddings + LinearSVC | 0.0555 | 0.2526 |
 
-**Final model: E4 — TF-IDF Bigrams + LinearSVC** (lowest Hamming Loss = 0.0476)
+**Final model: E4 - TF-IDF Bigrams + LinearSVC** (lowest Hamming Loss = 0.0476)
 
 ---
 
 ## Key Findings
 
-- **Class weighting was the single biggest improvement** — adding `class_weight='balanced'` to E1 improved F1 Macro by 165% (0.2062 → 0.5475) with no other changes
-- **SVM outperforms LR on Hamming Loss** but underperforms on F1 Macro — a precision/recall tradeoff
-- **Threshold tuning beats MLSMOTE** for rare label recall — synthetic TF-IDF interpolation added noise rather than signal
-- **TF-IDF outperforms SBERT** — general-purpose embeddings underperform on domain-specific SDG terminology; BioBERT or PubMedBERT recommended as future improvement
-- **Rare labels remain challenging** — indicators with fewer than 15 validation samples (3.1.2, 3.9.3, 3.3.4) still achieve near-zero F1 regardless of balancing strategy
+- **Class weighting was the single biggest improvement** - adding `class_weight='balanced'` to E1 improved F1 Macro by 165% (0.2062 → 0.5475) with no other changes
+- **SVM outperforms LR on Hamming Loss** but underperforms on F1 Macro - a precision/recall tradeoff
+- **Threshold tuning beats MLSMOTE** for rare label recall - synthetic TF-IDF interpolation added noise rather than signal
+- **TF-IDF outperforms SBERT** - general-purpose embeddings underperform on domain-specific SDG terminology; BioBERT or PubMedBERT recommended as future improvement
+- **Rare labels remain challenging** - indicators with fewer than 15 validation samples (3.1.2, 3.9.3, 3.3.4) still achieve near-zero F1 regardless of balancing strategy
 
 ---
 
@@ -194,9 +194,9 @@ Generates `submission.csv` in `outputs/`.
 
 | Member | Contribution |
 |--------|-------------|
-| Jok John Maker Kur | Notebook 2 — All experiments (E1–E11), GitHub repo, README |
-| Nanen Miracle Mbanaade | Notebook 1 — EDA & Preprocessing, Report: Methodology, Results, Discussion |
-| Nziza Aime Pacifique | Notebook 3 — Final Model & Inference, Report: Introduction, Literature, Conclusion, Ethics |
+| Jok John Maker Kur | Notebook 2 - All experiments (E1–E11), GitHub repo, README |
+| Nanen Miracle Mbanaade | Notebook 1 - EDA & Preprocessing, Report: Methodology, Results, Discussion |
+| Nziza Aime Pacifique | Notebook 3 - Final Model & Inference, Report: Introduction, Literature, Conclusion, Ethics |
 
 ---
 
@@ -204,9 +204,8 @@ Generates `submission.csv` in `outputs/`.
 
 | Resource | Link |
 |----------|------|
-| GitHub Repository | *(add link)* |
+| GitHub Repository | *(https://github.com/JokMaker/SDG3-Text-Classification)* |
 | Demo Video | *(add link)* |
-| Report (PDF) | *(add link)* |
 
 ---
 
