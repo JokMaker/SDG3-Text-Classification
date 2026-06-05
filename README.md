@@ -28,7 +28,7 @@ Documents in the dataset include tenders, reports, humanitarian initiatives, new
 **The pipeline covers:**
 
 - Exploratory data analysis and class imbalance investigation
-- Text preprocessing (HTML stripping, lemmatization, stop word removal)
+- Text preprocessing (HTML stripping, lemmatisation, stop word removal)
 - TF-IDF feature engineering (unigrams and bigrams)
 - 11 systematic experiments across model types, balancing strategies, thresholds, and embeddings
 - Final model selection and test set inference
@@ -37,7 +37,7 @@ Documents in the dataset include tenders, reports, humanitarian initiatives, new
 | Metric | Value |
 |--------|-------|
 | Evaluation metric | Hamming Loss (lower = better) |
-| Best validation Hamming Loss | `0.0476` - TF-IDF Bigrams + LinearSVC |
+| Best validation Hamming Loss | `0.0463` - TF-IDF Bigrams + LinearSVC (C=10.0)
 
 ---
 
@@ -50,7 +50,7 @@ Documents in the dataset include tenders, reports, humanitarian initiatives, new
 
 **Label structure:** 27 unique SDG 3 indicators (e.g. `3.1.1 - Maternal mortality ratio`, `3.3.1 - HIV infections`, `3.b.2 - ODA to medical research`)
 
-**Key challenge:** Severe class imbalance - most frequent label appears 1,044 times, rarest appears 165 times (6.3× ratio after binarization)
+**Key challenge:** Severe class imbalance - most frequent label appears 1,044 times, rarest appears 165 times (6.3× ratio after binarisation)
 
 Download the datasets from the Canvas assignment page and place them in:
 
@@ -72,7 +72,7 @@ SDG3-Assignment/
 │   └── Devex_test_questions.csv
 │
 ├── notebooks/
-│   ├── 01_EDA_and_Preprocessing.ipynb     ← EDA, cleaning, label binarization
+│   ├── 01_EDA_and_Preprocessing.ipynb     ← EDA, cleaning, label binarisation
 │   ├── 02_Baseline_Experiments.ipynb      ← 11 experiments, evaluation
 │   └── 03_Final_Model_Inference.ipynb     ← final model, submission file
 │
@@ -166,7 +166,7 @@ Generates `submission.csv` in `outputs/`.
 | E1  | TF-IDF unigrams + LR (no balancing) — baseline | 0.0565 | 0.2062 |
 | E2  | + class_weight='balanced' | 0.0588 | 0.5475 |
 | E3  | TF-IDF bigrams + LR balanced | 0.0571 | 0.5360 |
-| E4  | TF-IDF bigrams + LinearSVC balanced  | **0.0476** | 0.4827 |
+| E4  | TF-IDF bigrams + LinearSVC balanced  | **0.0463** | 0.4825 |
 | E5  | TF-IDF unigrams + Random Forest balanced | 0.0556 | 0.2518 |
 | E6  | TF-IDF bigrams + LR + per-label threshold tuning | 0.0547 | **0.5839** |
 | E7  | TF-IDF bigrams + SGD (log loss) balanced | 0.0504 | 0.5451 |
@@ -176,7 +176,7 @@ Generates `submission.csv` in `outputs/`.
 | E10 | Majority voting ensemble: LR + SVM + SGD | 0.0503 | 0.5411 |
 | E11 | SBERT embeddings + LinearSVC | 0.0555 | 0.2526 |
 
-**Final model: E4 - TF-IDF Bigrams + LinearSVC** (lowest Hamming Loss = 0.0476)
+**Final model: E4 - TF-IDF Bigrams + LinearSVC (C=10.0)** (lowest Hamming Loss = 0.0463)
 
 ---
 
@@ -204,7 +204,7 @@ Generates `submission.csv` in `outputs/`.
 
 | Resource | Link |
 |----------|------|
-| GitHub Repository | *(https://github.com/JokMaker/SDG3-Text-Classification)* |
+| GitHub Repository | https://github.com/JokMaker/SDG3-Text-Classification |
 | Demo Video | *(add link)* |
 
 ---
