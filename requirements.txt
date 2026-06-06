@@ -1,0 +1,11 @@
+scikit-learn
+scikit-multilearn
+imbalanced-learn
+beautifulsoup4
+nltk
+pandas
+numpy
+matplotlib
+seaborn
+wordcloud
+sentence-transformers
