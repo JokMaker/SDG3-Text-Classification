@@ -1,0 +1,15 @@
+Exp,Description,Hamming Loss,F1 Micro,F1 Macro,Precision,Recall
+E4,TF-IDF bigrams + LinearSVC (balanced),0.0476,0.5975,0.4827,0.7688,0.4886
+E4,TF-IDF bigrams + LinearSVC (balanced),0.0476,0.5975,0.4827,0.7688,0.4886
+E10,Majority voting ensemble: LR + SVM + SGD,0.0503,0.6391,0.5411,0.6638,0.6162
+E7,"TF-IDF bigrams + SGD (log loss, balanced)",0.0504,0.6413,0.5451,0.6606,0.623
+E9,Best synthesis: bigrams + LR balanced + threshold tuning,0.0547,0.6422,0.5839,0.6094,0.6788
+E6,TF-IDF bigrams + LR + per-label threshold tuning,0.0547,0.6422,0.5839,0.6094,0.6788
+E11,"SBERT embeddings + LinearSVC (C=10, balanced)",0.0555,0.422,0.2526,0.8542,0.2802
+E11,"SBERT embeddings + LinearSVC (C=10, balanced)",0.0555,0.422,0.2526,0.8542,0.2802
+E11,"SBERT embeddings + LinearSVC (C=10, balanced)",0.0555,0.422,0.2526,0.8542,0.2802
+E5,TF-IDF unigrams + Random Forest (balanced),0.0556,0.4206,0.2518,0.8537,0.279
+E1,TF-IDF unigrams + LR (no balancing),0.0565,0.3968,0.2062,0.8659,0.2574
+E3,TF-IDF bigrams + LR (class_weight=balanced),0.0571,0.6249,0.536,0.5947,0.6583
+E2,TF-IDF unigrams + LR (class_weight=balanced),0.0588,0.6274,0.5475,0.5783,0.6856
+E8,TF-IDF bigrams + LR + MLSMOTE oversampling,0.0589,0.6175,0.5386,0.5815,0.6583
