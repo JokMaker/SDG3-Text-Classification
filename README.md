@@ -205,7 +205,7 @@ Generates `submission.csv` in `outputs/`.
 | Resource | Link |
 |----------|------|
 | GitHub Repository | https://github.com/JokMaker/SDG3-Text-Classification |
-| Demo Video | *(add link)* |
+| Demo Video | https://drive.google.com/drive/folders/1GcTWb48EqSKzORcR2PlcnIVwoZlP-vXc?usp=drive_link |
 
 ---
 
